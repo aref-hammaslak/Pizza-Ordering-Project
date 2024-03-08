@@ -3,8 +3,8 @@ import Carasule from "../components/Carasule";
 import { carasuleImages } from "../../public/pizzaImages";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { faArrowRight  } from "@fortawesome/free-solid-svg-icons";
+
 
 import Button from "../components/Button";
 
@@ -50,6 +50,7 @@ const Home = () => {
           <div className=" !flex-shrink sm:w-auto w-[400px]  overflow-hidden">
             <Carasule images={carasuleImages} />
           </div>
+          
         </div>
       </div>
     </div>
