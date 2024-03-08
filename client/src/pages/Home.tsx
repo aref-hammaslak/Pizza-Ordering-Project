@@ -12,15 +12,15 @@ const Home = () => {
   const [orderBtnIsHoverd, setOrderBtnIsHoverd] = useState(false);
   return (
     <div className="bg-primary-mellow">
-      <div className="max-w-[1200px] m-auto bg-primary-mellow">
-        <div className="flex items-center h-screen ">
-          <div className="flex-1 flex gap-8 flex-col">
-            <h1 className="text-[42px] font-mono">
+      <div className="max-w-[1200px] m-auto bg-primary-mellow lg:px-12 md:px-8 px-4 p-2 lg:py-36 md:py-32  sm:py-28 py-12 ">
+        <div className="flex items-center xl:gap-12 lg:gap-8 md:gap-4 sm:flex-row flex-col gap-8 ">
+          <div className=" flex gap-8 flex-col max-w-[600px] flex-shrink ">
+            <h1 className="lg:text-[42px] font-mono md:text-[32px] text-[24px] font-bold text-center sm:text-left">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore,
               similique.
             </h1>
-            <div>
-              <div className="flex items-center">
+            <div className="flex justify-center sm:block">
+              <div className="flex items-center ">
                 <div
                   onMouseOver={() => {
                     setOrderBtnIsHoverd(true);
@@ -47,7 +47,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="max-w-[600px] ">
+          <div className=" !flex-shrink sm:w-auto w-[400px]  overflow-hidden">
             <Carasule images={carasuleImages} />
           </div>
         </div>

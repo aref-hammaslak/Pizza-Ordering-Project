@@ -24,7 +24,7 @@ const Carasule = ({images}:SwiperProps) => {
         <SwiperSlide id={index+ ''}>
           <div className=" overflow-hidden rounded-md">
             <img
-              className="w-full h-[300px] overflow-hidden object-cover "
+              className="w-full  overflow-hidden object-cover "
               src={image}
             />
           </div>

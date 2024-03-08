@@ -2,7 +2,8 @@ import React from 'react'
 import  {Link} from 'react-router-dom'
 import cartImg from '../../public/add-to-basket.png'
 import Button from './Button'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {} from '@fortawesome/fontawesome-svg-core'
 
 
 type NavContent = {
@@ -27,18 +28,19 @@ const Header = ({brandName , navContents }: HeaderProps) => {
     )
   })
   return (
-    <div className='flex justify-between bg-primary-dark font-roboto px-10 items-center text-white'>
+    <div className='flex justify-between bg-primary-dark font-roboto sm:py-4 lg:py-0  px-10 items-center text-white'>
       <div>
         <span className='font-gluten text-3xl hover:text-primary-light font-bold'>
           {brandName}
         </span>
       </div>
-      <nav className='h-full'>
+      <nav className='h-full hidden md:block'>
         <ul className='flex h-full  items-center'>
           {navElemints}
         </ul>
       </nav>
-      <div className='flex items-center '>
+      <div className='md:flex hidden items-center '>
+        
         <div className='flex mr-4 gap-2 md:gap-3 lg:gap-4' >
           <Button   styles='hover:text-primary-light  lg:text-lg text-white  bg-primary-dark' isLinked={true} name='Sign up' path='/login' />
           <Button   styles='hover:text-primary-dark   bg-primary-light' isLinked={true} name='Login' path='/login' />
@@ -48,6 +50,9 @@ const Header = ({brandName , navContents }: HeaderProps) => {
             <img className='md:w-10 lg:w-12 w-8' src={cartImg} alt="" />
           </Link>
         </div>
+      </div>
+      <div>
+
       </div>
     </div>
   )
