@@ -8,7 +8,8 @@ export default {
     extend: {
       colors:{
         'primary': {
-          mellow: '#FFBB5C',
+          // mellow: '#ffedd4',
+          mellow: '#f7e5cb',
           light: '#FF9B50',
           DEFAULT: '#E25E3E',
           dark: '#C63D2F',
