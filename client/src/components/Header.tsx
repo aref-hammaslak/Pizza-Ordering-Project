@@ -70,7 +70,7 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
           />
         </div>
         <div>
-          <Link to="/cart" className="-translate-y-[2px] md:p-2 lg:p-4 flex  items-center !pr-0">
+          <Link to="/cart" className=" -translate-y-[2px] md:p-2 lg:p-4 flex  items-center !pr-0">
             <img className="md:w-10 lg:w-12 w-8" src={cartImg} alt="" />
           </Link>
         </div>
