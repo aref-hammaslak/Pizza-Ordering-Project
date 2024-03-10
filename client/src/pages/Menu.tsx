@@ -5,8 +5,8 @@ import FilltringBar from "../components/FilltringBar";
 type FilteringOptionsType = {
   selectedCatagories: string[];
   selectedToppings: string[];
-  serchedValue: string;
-  filteringOrder: string;
+  serchedTerm: string;
+  isAscending: boolean;
 };
 type FilteringContextType = {
   filteringOptions: FilteringOptionsType;
@@ -15,16 +15,18 @@ type FilteringContextType = {
   >;
 };
 
-const Menu = () => {
-  const FilteringContext = createContext<FilteringContextType>(null as never);
+  export const FilteringContext = createContext<FilteringContextType>(null as never);
 
+
+  const Menu = () => {
   const [filteringOptions, setFilteringOptions] =
     useState<FilteringOptionsType>({
       selectedCatagories: [],
       selectedToppings: [],
-      serchedValue: "",
-      filteringOrder: "ascending",
+      serchedTerm: "",
+      isAscending: true,
     });
+    console.log(filteringOptions);
 
   return (
     <div>
