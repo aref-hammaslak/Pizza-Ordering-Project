@@ -42,7 +42,7 @@ const SelectionDorpDown = (props: { name: string; items: string[] }) => {
         
       </label>
       <ul 
-        className={`flex flex-col absolute rounded bg-primary-mellow rounded-t-none  top-full left-0 w-auto ${
+        className={`flex flex-col absolute rounded z-20 bg-primary-mellow rounded-t-none  top-full left-0 w-auto ${
           isHovered? "block" : "hidden"
         }`}
         onChange={() => {}}>

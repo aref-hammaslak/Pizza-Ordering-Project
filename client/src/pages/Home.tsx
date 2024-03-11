@@ -15,9 +15,8 @@ const Home = () => {
       <div className="max-w-[1200px] m-auto bg-primary-mellow lg:px-12 md:px-8 px-4 p-2 lg:py-36 md:py-32  sm:py-28 py-12 ">
         <div className="flex items-center xl:gap-12 lg:gap-8 md:gap-4 sm:flex-row flex-col gap-8 ">
           <div className=" flex gap-8 flex-col max-w-[600px] flex-shrink ">
-            <h1 className="lg:text-[42px] font-mono md:text-[32px] text-[24px] font-bold text-center sm:text-left">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore,
-              similique.
+            <h1 className="lg:text-[50px] font-mono md:text-[32px] text-[24px] font-extrabold text-center sm:text-left">
+              At <span className="font-gluten">pizzaria</span>, we offer the best pizzas in the world
             </h1>
             <div className="flex justify-center sm:block">
               <div className="flex items-center ">

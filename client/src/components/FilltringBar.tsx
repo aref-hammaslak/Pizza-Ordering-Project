@@ -21,10 +21,10 @@ const FilltringBar = (props: filteringProps) => {
   const {filteringOptions, setFilteringOptions} = useContext(FilteringContext);
   return (
     <div className="bg-primary-mellow">
-      <div className="max-w-[1200px] m-auto bg-primary-mellow flex justify-between   ">
-        <div className="flex gap-2 ">
+      <div className="max-w-[1200px] m-auto bg-primary-mellow sm:flex sm:flex-row sm:justify-between     ">
+        <div className="flex gap-2 justify-center ">
           <div
-            className="flex items-center "
+            className="flex items-center  "
             onClick={() => {
               setIsAscending((n) => !n);
               setFilteringOptions({
@@ -50,9 +50,9 @@ const FilltringBar = (props: filteringProps) => {
           <SelectionDorpDown name={"Categories"} items={categories} />
           <SelectionDorpDown name={"Toppings"} items={toppings} />
         </div>
-        <div className="p-4 text-gray-700 relative  ">
-          <div className="absolute translate-x-2
-          translate-y-2">
+        <div className="p-4 text-gray-700 relative flex justify-center  ">
+          <div className="absolute 
+          translate-y-2 -translate-x-[123px]">
             <FontAwesomeIcon icon={faSearch}/>
           </div>
           <input
