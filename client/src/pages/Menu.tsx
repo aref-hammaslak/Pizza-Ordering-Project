@@ -2,6 +2,7 @@ import React, { createContext, useState } from "react";
 
 import FilltringBar from "../components/FilltringBar";
 import PizzaPreview from "../components/PizzaPreview";
+import {PizzaDetailsModal} from "../components/PizzaDetailsModal";
 
 type FilteringOptionsType = {
   selectedCatagories: string[];
@@ -36,6 +37,9 @@ export type PizzaPreviwType = {
       serchedTerm: "",
       isAscending: true,
     });
+
+  const [clickedPizzaId, setClickedPizzaId] = useState<number>(0);
+  const [IsModalOpen, setIsModalOpen] = useState<boolean>(true);
   const pizzas: PizzaPreviwType[] = [{
     id: 1,
     name: "pizza paste",
@@ -57,7 +61,7 @@ export type PizzaPreviwType = {
 ]
 
   return (
-    <div>
+    <div className="">
       <FilteringContext.Provider
         value={
           { filteringOptions, setFilteringOptions } 
@@ -73,11 +77,19 @@ export type PizzaPreviwType = {
         {
           pizzas.map((pizza: PizzaPreviwType) => {
             return (
-              <PizzaPreview pizza = {pizza}/>
+              <PizzaPreview setModalState= {setIsModalOpen} setPizzaId = {setClickedPizzaId}  pizza = {pizza}/>
             )
           })
         }
       </div>
+      
+      {
+        IsModalOpen && clickedPizzaId!== 0 && (
+          <PizzaDetailsModal pizzaId={clickedPizzaId} setModalState={setIsModalOpen} />
+        )
+      }
+
+
     </div>
    
   );

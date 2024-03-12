@@ -24,7 +24,7 @@ const Button = ({isLinked, styles, path , name, handler}:ButtonProms) => {
       }
       {
         !isLinked && (
-          <button className={`lg:text-lg md:text-md hover:text-primary-dark py-2 md:px-3 rounded-2xl lg:px-5 bg-primary-light ${styles}`} onClick ={handler as MouseEventHandler}>
+          <button className={`lg:text-lg md:text-md hover:text-primary-dark px-2 py-2 md:px-3 rounded-2xl lg:px-5 bg-primary-light ${styles}`} onClick ={handler as MouseEventHandler}>
             {name}
           </button>
         )
