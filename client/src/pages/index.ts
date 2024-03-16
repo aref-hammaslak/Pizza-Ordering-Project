@@ -5,6 +5,7 @@ import Login from "./Login";
 import Route from "./Route";
 import Signup from "./Signup";
 import Menu from "./Menu";
+import Cart from "./Cart";
 
 
 export{
@@ -14,6 +15,7 @@ export{
   Home,
   Route,
   Signup,
-  Menu
+  Menu,
+  Cart,
 
 }

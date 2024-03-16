@@ -2,7 +2,8 @@ import React, { createContext, useState } from "react";
 
 import FilltringBar from "../components/FilltringBar";
 import PizzaPreview from "../components/PizzaPreview";
-import {PizzaDetailsModal} from "../components/PizzaDetailsModal";
+import { PizzaDetailsModal } from "../components/PizzaDetailsModal";
+import { usePizzas } from "../hooks/useRequests";
 
 type FilteringOptionsType = {
   selectedCatagories: string[];
@@ -20,16 +21,16 @@ type FilteringContextType = {
 export type PizzaPreviwType = {
   id: number;
   name: string;
-  price: number;
+  cost: number;
+  notes: string;
   image: string;
-}
+};
 
+export const FilteringContext = createContext<FilteringContextType>(
+  null as never
+);
 
-
-  export const FilteringContext = createContext<FilteringContextType>(null as never);
-
-
-  const Menu = () => {
+const Menu = () => {
   const [filteringOptions, setFilteringOptions] =
     useState<FilteringOptionsType>({
       selectedCatagories: [],
@@ -40,32 +41,14 @@ export type PizzaPreviwType = {
 
   const [clickedPizzaId, setClickedPizzaId] = useState<number>(0);
   const [IsModalOpen, setIsModalOpen] = useState<boolean>(true);
-  const pizzas: PizzaPreviwType[] = [{
-    id: 1,
-    name: "pizza paste",
-    price: 100,
-    image: "https://img.freepik.com/free-photo/freshly-italian-pizza-with-mozzarella-cheese-slice-generative-ai_188544-12347.jpg",
-  },
-  {
-    id: 1,
-    name: "pizza paste",
-    price: 100,
-    image: "https://img.freepik.com/premium-photo/delicious-huge-pizza-cut-half-ai-generation_199743-18251.jpg?size=626&ext=jpg",
-  },
-  {
-    id: 1,
-    name: "pizza paste",
-    price: 100,
-    image: "https://img.freepik.com/free-photo/freshly-italian-pizza-with-mozzarella-cheese-slice-generative-ai_188544-12347.jpg",
-  }
-]
+  const pizzas: PizzaPreviwType[] = usePizzas().Pizzas.data;
+  console.log(pizzas);
+  const { isLoading, isSuccess } = usePizzas().Pizzas;
 
   return (
     <div className="">
       <FilteringContext.Provider
-        value={
-          { filteringOptions, setFilteringOptions } 
-        }
+        value={{ filteringOptions, setFilteringOptions }}
       >
         <FilltringBar
           catagories={["Vegetarian", "Meat Lovers", "Specialty"]}
@@ -73,25 +56,28 @@ export type PizzaPreviwType = {
         />
       </FilteringContext.Provider>
 
-      <div className="grid justify-center lg:grid-cols-3 md:grid-cols-2   gap-20 max-w-[1100px] p-4 m-auto mt-20 lg:px-12 md:px-8 px-0 sm:px-4 ">
-        {
-          pizzas.map((pizza: PizzaPreviwType) => {
+      {isSuccess && (
+        <div className="grid justify-center lg:grid-cols-3 md:grid-cols-2   gap-20 max-w-[1100px] p-4 m-auto mt-20 lg:px-12 md:px-8 px-0 sm:px-4 ">
+          {pizzas.map((pizza: PizzaPreviwType) => {
             return (
-              <PizzaPreview setModalState= {setIsModalOpen} setPizzaId = {setClickedPizzaId}  pizza = {pizza}/>
-            )
-          })
-        }
-      </div>
-      
-      {
-        IsModalOpen && clickedPizzaId!== 0 && (
-          <PizzaDetailsModal pizzaId={clickedPizzaId} setModalState={setIsModalOpen} />
-        )
-      }
+              <PizzaPreview
+                setModalState={setIsModalOpen}
+                setPizzaId={setClickedPizzaId}
+                pizza={pizza}
+              />
+            );
+          })}
+        </div>
+      )}
+      {isLoading && <div>Loading...</div>}
 
-
+      {IsModalOpen && clickedPizzaId !== 0 && (
+        <PizzaDetailsModal
+          pizzaId={clickedPizzaId}
+          setModalState={setIsModalOpen}
+        />
+      )}
     </div>
-   
   );
 };
 

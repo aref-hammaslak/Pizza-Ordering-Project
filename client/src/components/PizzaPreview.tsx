@@ -24,10 +24,10 @@ const PizzaPreview = (props: PizzaPreviewProps) => {
         />
       </div>
       <div className="flex flex-col items-center">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 justify-between">
           <h3 className="text-xl font-bold text-center">{pizza.name}</h3>
-          <h3 className="text-xl font-bold text-center">${pizza.price}</h3>
-          <Button isLinked={false} name="Order now" styles={"text-white"} />
+          <h3 className="text-xl font-semibold text-center">${pizza.cost}</h3>
+          <Button isLinked={false} name="Order now" styles={"text-white !bg-primary-dark hover:text-primary-dark hover:!bg-white transition-color hover:outline hover:outline-primary-dark"} />
         </div>
       </div>
     </div>

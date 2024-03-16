@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 type ModalBackgroundType = {
   children: React.ReactNode
-  setModalState: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalState?: React.Dispatch<React.SetStateAction<boolean>>;
 }  
 const ModalBackground = (props:ModalBackgroundType) => {
   const { setModalState , children } = props;
@@ -10,7 +10,7 @@ const ModalBackground = (props:ModalBackgroundType) => {
   useEffect(() => {
     window.addEventListener("resize", () => {
       setVhSize(document.body.scrollHeight);
-      console.log(vhSize)
+      
     })
   });
 
@@ -19,10 +19,10 @@ const ModalBackground = (props:ModalBackgroundType) => {
     <div
       id="modal-background"
       onClick={(e) => {
-
+        if(!setModalState) return
         setModalState(false);
       }}
-      className= {`bg-black bg-opacity-60    absolute top-0 inset-x-0 font-roboto`}
+      className= {`bg-black bg-opacity-60 z-20   absolute top-0 inset-x-0 font-roboto`}
       style={{ height: vhSize}}
     >
       <div onClick={(e) => e.stopPropagation()}  >
