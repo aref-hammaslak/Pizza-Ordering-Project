@@ -42,7 +42,7 @@ const Menu = () => {
   const [clickedPizzaId, setClickedPizzaId] = useState<number>(0);
   const [IsModalOpen, setIsModalOpen] = useState<boolean>(true);
   const pizzas: PizzaPreviwType[] = usePizzas().Pizzas.data;
-  console.log(pizzas);
+  
   const { isLoading, isSuccess } = usePizzas().Pizzas;
 
   return (

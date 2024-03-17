@@ -19,7 +19,7 @@ const AdjustOrderQuantity = (props: AdjustOrderQuantityType) => {
          quantity: orderQuantity,
       });
     }
-  }, [props.orderdPizza]);
+  }, [orderQuantity]);
 
   return (
     <div className="flex py-2 bg-white cursor-pointer rounded">

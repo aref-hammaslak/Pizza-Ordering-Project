@@ -3,7 +3,9 @@ import Button from "./Button";
 import { useState } from "react";
 import ModalBackground from "./ModalBackground";
 import AdjustOrderQuantity from "./AdjustOrderQuantity";
-import { usePizzas } from "../hooks/useRequests";
+import { useOrders, usePizzas } from "../hooks/useRequests";
+import SelectionDorpDown from "./SelectionDorpDown";
+import ExtraToppingsSelector from './ExtraToppingsSelector';
 
 type pizzaDetailsModalType = {
   pizzaId: number;
@@ -11,38 +13,94 @@ type pizzaDetailsModalType = {
 };
 
 export type OrderedPizza = {
-  id: number;
-  note: string;
-  size: string;
-  price: number;
+  notes: string;
+  crust: number;
+  extra_toppings: number[];
+  type: number;
+  size: number;
   quantity: number;
 };
 
+type Size = {
+  id: number;
+  name: string;
+  ratio: number;
+};
+
+export type Toppings = {
+  id: number;
+  name: string;
+  cost: number;
+  notes: string;
+};
+
+type Crust = {
+  id: number;
+  name: string;
+  cost: number;
+  notes: string;
+};
+
 const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
-  const pizza = usePizzas().Pizzas.data.filter((pizza: { id: number; }) => +pizza.id == props.pizzaId)[0];
-  console.log(pizza);
-  const { isSuccess, isLoading } = usePizzas().Pizzas;
+
+  //get selected pizza based on the ID 
+  const pizza = usePizzas().Pizzas.data.filter(
+    (pizza: { id: number }) => +pizza.id == props.pizzaId
+  )[0];
+
+ const { isSuccess: isSucPizzas, isLoading: isLodPizzas } = usePizzas().Pizzas;
+
+  // const orderExtras = useOrders().orderExtras.data as any;
+  const [orderExtras, setOrderExtras] = useState<{
+    toppings: Toppings[];
+    crusts: Crust[];
+    sizes: Size[];
+  }>();
+
+
+
+  const orderExtrasQuery = useOrders().orderExtras;
+  const { isSuccess: isSucOrdExt } = orderExtrasQuery;
+
+  
+
+ 
 
   const [orderedPizza, setOrderedPizza] = useState<OrderedPizza>({
-    id: 0,
-    note: "",
-    size: "",
-    price: 0,
+    notes: "",
+    size: 1,
     quantity: 1,
+    crust: 1,
+    extra_toppings: [1],
+    type: props.pizzaId,
   });
+
+  console.log(orderedPizza);
+  
+
+  useEffect(() => {
+    const getOrderExtras = async () => {
+      const response = orderExtrasQuery.data;
+      if (!response) return;
+      const sizes = await response.sizes();
+      const toppings = await response.toppings();
+      const crusts = await response.crusts();
+      setOrderExtras({
+        sizes: sizes as Size[],
+        toppings: toppings as Toppings[],
+        crusts: crusts as Crust[],
+      });
+    };
+
+    getOrderExtras();
+
+  }, [isSucOrdExt]);
 
   return (
     <ModalBackground setModalState={props.setModalState}>
+      {isLodPizzas && <div>loding...</div>}
 
-      {
-        isLoading && (
-          <div>
-            loding...
-          </div>
-        )
-      }
-
-      {isSuccess && (
+      {isSucPizzas && (
         <div
           onClick={(e) => e.stopPropagation()}
           className="bg-primary-mellow fixed max-w-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8 shadow-md rounded md:max-h-[600px] scr max-h-[400px] overflow-auto"
@@ -77,34 +135,64 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
                     onChange={(e) => {
                       setOrderedPizza({
                         ...orderedPizza,
-                        size: e.target.value,
+                        size: +e.target.value,
                       });
                     }}
                   >
-                    {["Small", "Medium", "Large"].map((size) => (
+                    {orderExtras?.sizes.map((size) => (
                       <option
                         className="active:bg-primary-dark  rounded-none"
-                        key={size}
-                        value={size}
+                        key={size.name}
+                        value={size.id}
                       >
-                        {size}
+                        {size.name}
                       </option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <AdjustOrderQuantity orderId={orderedPizza.id} />
+                  <AdjustOrderQuantity orderdPizza={orderedPizza} setOrderdPizz={setOrderedPizza}  />
                 </div>
               </div>
+              
+              <div className="flex justify-between ">
+                <div className="flex items-center">
+                  <label className=" font-bold items-center mr-2">Crust:</label>
+                  <select
+                    className="p-2  outline-none rounded text-sm"
+                    onChange={(e) => {
+                      setOrderedPizza({
+                        ...orderedPizza,
+                        crust: +e.target.value,
+                      });
+                    }}
+                  >
+                    {orderExtras?.crusts.map((crust) => (
+                      <option
+                        className="active:bg-primary-dark  rounded-none"
+                        key={crust.name}
+                        value={crust.id}
+                      >
+                        {crust.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                      <ExtraToppingsSelector toppings={orderExtras?.toppings} orderedPizza={orderedPizza} setToppings={setOrderedPizza}  name="Toppings" />
+                </div>
+              </div>
+            
+
               <div>
                 <textarea
-                  value={orderedPizza?.note}
+                  value={orderedPizza?.notes}
                   className="resize-none p-2 rounded focus:outline-primary-dark overflow-y-auto"
                   onChange={(e) =>
-                    setOrderedPizza({ ...orderedPizza, note: e.target.value })
+                    setOrderedPizza({ ...orderedPizza, notes: e.target.value })
                   }
                   placeholder="Type something..."
-                  rows={4} // Specify the number of visible text lines
+                  rows={3} // Specify the number of visible text lines
                   cols={50} // Specify the number of visible text columns
                 />
               </div>
