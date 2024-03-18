@@ -77,3 +77,23 @@ html, body{
 ::-webkit-scrollbar-thumb:hover {
   background: #a0aec0;
 }
+
+
+@keyframes fade-forward {
+  0% {
+    opacity: 0.6;
+    transform: scale(.1);
+  }
+  90% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-forward {
+  animation: fade-forward .5s linear 1;
+  
+}

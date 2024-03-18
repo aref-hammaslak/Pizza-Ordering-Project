@@ -34,21 +34,21 @@ const Cart = () => {
 
   },]
   const total: number = 120;
+  console.log(overallState);
   return (
     <>
       <div className=" ">
         <div
-          className={`${overallState.isCartOpen ? "" : "hidden"}`}
+          className= {`${overallState.isCartOpen ? '': 'hidden'} absolute inset-x-0 top-0 bottom-0`}
           onClick={(e) => {
             setOverallState({
               ...overallState,
               isCartOpen: false,
             });
+            console.log(overallState);
           }}
         >
-          <ModalBackground>
-            <div></div>
-          </ModalBackground>
+        
         </div>
 
         <div

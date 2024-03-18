@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Button from "./Button";
 import { useState } from "react";
 import ModalBackground from "./ModalBackground";
@@ -9,6 +9,7 @@ import SelectionDorpDown from "./SelectionDorpDown";
 import ExtraToppingsSelector from './ExtraToppingsSelector';
 import { QueryKey, useQuery } from '@tanstack/react-query';
 import axios from "axios";
+import { ovrallStatContext, OverallState } from '../pages/Route';
 
 type pizzaDetailsModalType = {
   pizzaId: number;
@@ -57,7 +58,6 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
 
  const { isSuccess: isSucPizzas, isLoading: isLodPizzas } = usePizzas().Pizzas;
 
-  // const orderExtras = useOrders().orderExtras.data as any;
   const [orderExtras, setOrderExtras] = useState<{
     toppings: Toppings[];
     crusts: Crust[];
@@ -72,7 +72,7 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
   const { isSuccess: isSucOrdExt } = orderExtrasQuery;
 
   
-
+  const {setOverallState, overallState} = useContext(ovrallStatContext);
  
 
   const [orderedPizza, setOrderedPizza] = useState<OrderedPizza>({
@@ -123,6 +123,13 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
     const response = await  postOrder(orderedPizza);
     if (response) {
       props.setModalState(false);
+      setTimeout(() => {
+        setOverallState({
+        ...overallState,
+        isCartOpen: true,
+      })
+      }, 300);
+      
     }
     
   }
@@ -132,9 +139,10 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
       {isLodPizzas && <div>loding...</div>}
 
       {isSucPizzas && (
-        <div
+        <div className=" absolute top-12 left-1/2 !-translate-x-1/2  ">
+          <div
           onClick={(e) => e.stopPropagation()}
-          className="bg-primary-mellow fixed max-w-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8 shadow-md rounded md:max-h-[600px]  scrollbarmax-h-[400px] overflow-auto"
+          className="bg-primary-mellow  max-w-[500px]  p-8 shadow-md rounded md:max-h-[600px] origin-center transition-transform   scrollbarmax-h-[400px] fade-forward overflow-auto"
         >
           <form action="" onSubmit={onSubmitHandler}>
             <div className="flex flex-col gap-4">
@@ -238,6 +246,8 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
             </div>
           </form>
         </div>
+        </div>
+        
       )}
     </ModalBackground>
   );

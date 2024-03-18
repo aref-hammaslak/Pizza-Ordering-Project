@@ -71,7 +71,7 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
             />
           </div>
           <div>
-            <a
+            <div
               onClick={(e) => setOverallState({
                 ...overallState,
                 isCartOpen: true,
@@ -79,7 +79,7 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
               className=" -translate-y-[2px] md:p-2 lg:p-4 flex  items-center !pr-0"
             >
               <img className="md:w-10 lg:w-12 w-8" src={cartImg} alt="" />
-            </a>
+            </div>
           </div>
         </div>
 
@@ -131,7 +131,7 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
       </div>
 
       
-      {overallState.isCartOpen && <Cart />}
+      { <Cart />}
     </>
   );
 };
