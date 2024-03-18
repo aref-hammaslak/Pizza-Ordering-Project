@@ -1,7 +1,31 @@
 import axios from 'axios';
 import  {useQuery , QueryKey} from '@tanstack/react-query';
 
-const API_URL = 'http://localhost:8000/api';
+export const API_URL = 'http://localhost:8000/api';
+
+const USER_INFO = {
+  "token": "ecc53b3e82bfff0c0c52211421801d92b29fbf4f",
+  "user": {
+      "id": 26,
+      "username": "aref",
+      "first_name": "aref",
+      "last_name": "hammaslak",
+      "email": "aref@gmial.com"
+  }
+}
+
+axios.interceptors.request.use((config) => {
+  if (!localStorage.getItem('userInfo'))  return config;
+
+  const token =  JSON.parse(localStorage.getItem('userInfo') as string).token;
+  if (token) {
+    config.headers.Authorization = `Token ${token}`;
+  }
+  return config;
+});
+
+localStorage.setItem('userInfo', JSON.stringify(USER_INFO));
+console.log(JSON.parse(localStorage.getItem('userInfo') as string).token)
 
 const usePizzas = (pizzaID:(number)= 0) => {
 
