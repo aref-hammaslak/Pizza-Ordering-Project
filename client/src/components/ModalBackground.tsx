@@ -10,7 +10,7 @@ const ModalBackground = (props:ModalBackgroundType) => {
   useEffect(() => {
     window.addEventListener("resize", () => {
       setVhSize(document.body.scrollHeight);
-      console.log(document.body.scrollHeight);
+      
       
     })
   });
@@ -23,7 +23,7 @@ const ModalBackground = (props:ModalBackgroundType) => {
         if(!setModalState) return
         setModalState(false);
       }}
-      className= {`bg-black bg-opacity-60 z-20   absolute top-0 inset-x-0 font-roboto`}
+      className= {`bg-black bg-opacity-60 z-20  fixed  overflow-auto  top-0 inset-x-0 font-roboto`}
       style={{ height: vhSize}}
     >
       <div onClick={(e) => e.stopPropagation()}  >

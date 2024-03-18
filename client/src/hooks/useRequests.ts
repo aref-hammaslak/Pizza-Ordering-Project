@@ -114,10 +114,10 @@ const usePostOrder = async (order:OrderedPizza) => {
     return response.data;
   }
 
-  const postResponse = useQuery({
-    queryKey: ['postResponse' as unknown as QueryKey],
-    queryFn:  postOrder,
-  })
+  // const postResponse = useQuery({
+  //   queryKey: ['postResponse' as unknown as QueryKey],
+  //   queryFn:  postOrder,
+  // })
 
   return postOrder;
 }

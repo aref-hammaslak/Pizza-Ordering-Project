@@ -48,14 +48,14 @@ const SelectionDorpDown = (props: { name: string; items: string[] }) => {
         onChange={() => {}}>
         {items.map((item) => (
           <li className="flex hover:bg-primary-light gap-2 items-center px-2 py-2 " key={item}>
-            <span>{item}</span>
-            
             <input
               type="checkbox"
               value={item}
               checked={filteringOptions[optionType].includes(item)}
               onChange={onChangeHandler}
             />
+            <span>{item}</span>
+            
           </li>
         ))}
       </ul>

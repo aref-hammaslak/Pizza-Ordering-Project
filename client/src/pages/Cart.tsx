@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import ModalBackground from "../components/ModalBackground";
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Button from "../components/Button";
 import CartItem from "../components/CartItem";
+import { ovrallStatContext, OverallState } from './Route';
 type CartPropsType = {
   setIsCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isCartOpen: boolean;
@@ -20,8 +21,9 @@ export type CartItemType ={
 
 }
 
-const Cart = (props: CartPropsType) => {
-  const { isCartOpen, setIsCartOpen } = props;
+const Cart = () => {
+  const {overallState, setOverallState} = useContext(ovrallStatContext);
+
   const cartItems : CartItemType[] = [{
     id: 1,
     name: '<<Name>>',
@@ -36,9 +38,12 @@ const Cart = (props: CartPropsType) => {
     <>
       <div className=" ">
         <div
-          className={`${isCartOpen ? "open" : "hidden"}`}
+          className={`${overallState.isCartOpen ? "" : "hidden"}`}
           onClick={(e) => {
-            setIsCartOpen(false);
+            setOverallState({
+              ...overallState,
+              isCartOpen: false,
+            });
           }}
         >
           <ModalBackground>
@@ -48,11 +53,14 @@ const Cart = (props: CartPropsType) => {
 
         <div
           className={`w-[400px] transition-transform z-20 duration-500 fixed top-0 bottom-0 right-0 bg-white 
-        ${isCartOpen ? "" : "translate-x-full"}`}
+        ${overallState.isCartOpen ? "" : "translate-x-full"}`}
         >
           <div className=" text-4xl bg-primary-dark  right-0 w-[400px] origin-left ">
             <FontAwesomeIcon
-            onClick={() => setIsCartOpen(false)}
+            onClick={() => setOverallState({
+              ...overallState,
+               isCartOpen: false
+            })}
             className="hover:animate-spin p-5 text-white" icon={faXmark} />
           </div>
           <div className="flex flex-col px-4 ">

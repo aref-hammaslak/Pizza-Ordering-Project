@@ -134,7 +134,7 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
       {isSucPizzas && (
         <div
           onClick={(e) => e.stopPropagation()}
-          className="bg-primary-mellow fixed max-w-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8 shadow-md rounded md:max-h-[600px] scr max-h-[400px] overflow-auto"
+          className="bg-primary-mellow fixed max-w-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8 shadow-md rounded md:max-h-[600px]  scrollbarmax-h-[400px] overflow-auto"
         >
           <form action="" onSubmit={onSubmitHandler}>
             <div className="flex flex-col gap-4">

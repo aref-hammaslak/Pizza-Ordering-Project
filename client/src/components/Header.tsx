@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import cartImg from "../../public/add-to-basket.png";
 import Button from "./Button";
@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import {} from "@fortawesome/fontawesome-svg-core";
 import { Cart } from "../pages";
+import { ovrallStatContext, OverallState } from '../pages/Route';
 
 type NavContent = {
   name: string;
@@ -19,8 +20,8 @@ type HeaderProps = {
 
 const Header = ({ brandName, navContents }: HeaderProps) => {
   const [navIsOpen, setNavIsOpen] = useState(false);
+  const {setOverallState , overallState} = useContext(ovrallStatContext);
   const mobileNavContent: NavContent[] = [...navContents];
-  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
   mobileNavContent.push(
     ...[
@@ -71,7 +72,10 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
           </div>
           <div>
             <a
-              onClick={(e) => setIsCartOpen(true)}
+              onClick={(e) => setOverallState({
+                ...overallState,
+                isCartOpen: true,
+              })}
               className=" -translate-y-[2px] md:p-2 lg:p-4 flex  items-center !pr-0"
             >
               <img className="md:w-10 lg:w-12 w-8" src={cartImg} alt="" />
@@ -127,7 +131,7 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
       </div>
 
       
-      {<Cart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />}
+      {overallState.isCartOpen && <Cart />}
     </>
   );
 };
