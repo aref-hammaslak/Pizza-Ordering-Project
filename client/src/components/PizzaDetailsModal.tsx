@@ -2,10 +2,13 @@ import React, { useEffect } from "react";
 import Button from "./Button";
 import { useState } from "react";
 import ModalBackground from "./ModalBackground";
+import { useNavigate } from "react-router-dom";
 import AdjustOrderQuantity from "./AdjustOrderQuantity";
-import { useOrders, usePizzas } from "../hooks/useRequests";
+import { API_URL, useOrderExtras, usePizzas, usePostOrder } from "../hooks/useRequests";
 import SelectionDorpDown from "./SelectionDorpDown";
 import ExtraToppingsSelector from './ExtraToppingsSelector';
+import { QueryKey, useQuery } from '@tanstack/react-query';
+import axios from "axios";
 
 type pizzaDetailsModalType = {
   pizzaId: number;
@@ -15,10 +18,11 @@ type pizzaDetailsModalType = {
 export type OrderedPizza = {
   notes: string;
   crust: number;
-  extra_toppings: number[];
+  extra_topping: number[];
   type: number;
   size: number;
   quantity: number;
+  owner: number;
 };
 
 type Size = {
@@ -43,6 +47,9 @@ type Crust = {
 
 const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
 
+   const navigate = useNavigate();
+   
+
   //get selected pizza based on the ID 
   const pizza = usePizzas().Pizzas.data.filter(
     (pizza: { id: number }) => +pizza.id == props.pizzaId
@@ -57,9 +64,11 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
     sizes: Size[];
   }>();
 
+  
 
 
-  const orderExtrasQuery = useOrders().orderExtras;
+
+  const orderExtrasQuery = useOrderExtras();
   const { isSuccess: isSucOrdExt } = orderExtrasQuery;
 
   
@@ -71,11 +80,12 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
     size: 1,
     quantity: 1,
     crust: 1,
-    extra_toppings: [1],
+    extra_topping: [1],
     type: props.pizzaId,
+    owner: 0,
   });
 
-  console.log(orderedPizza);
+
   
 
   useEffect(() => {
@@ -96,6 +106,27 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
 
   }, [isSucOrdExt]);
 
+  const postOrder = async (order:OrderedPizza) => {
+    order.owner = JSON.parse(localStorage.getItem('userInfo') as string).user.id;
+    const response = await axios.post<OrderedPizza>(`${API_URL}/orders`, order);
+    console.log(order);
+    return response.data;
+  }
+
+  const onSubmitHandler = async (e:any) => {
+
+    e.preventDefault();
+
+    if(!localStorage.getItem('userInfo')) return navigate('/login');
+
+    
+    const response = await  postOrder(orderedPizza);
+    if (response) {
+      props.setModalState(false);
+    }
+    
+  }
+
   return (
     <ModalBackground setModalState={props.setModalState}>
       {isLodPizzas && <div>loding...</div>}
@@ -105,7 +136,7 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
           onClick={(e) => e.stopPropagation()}
           className="bg-primary-mellow fixed max-w-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8 shadow-md rounded md:max-h-[600px] scr max-h-[400px] overflow-auto"
         >
-          <form action="">
+          <form action="" onSubmit={onSubmitHandler}>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col  items-center gap-2">
                 <img

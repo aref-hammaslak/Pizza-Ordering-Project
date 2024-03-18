@@ -1,5 +1,6 @@
 import axios from 'axios';
 import  {useQuery , QueryKey} from '@tanstack/react-query';
+import { OrderedPizza } from '../components/PizzaDetailsModal';
 
 export const API_URL = 'http://localhost:8000/api';
 
@@ -44,7 +45,7 @@ const usePizzas = (pizzaID:(number)= 0) => {
   // }
 
   const Pizzas = useQuery({
-    queryKey: 'pizzas' as unknown as QueryKey,
+    queryKey: ['pizzas' as unknown as QueryKey],
     queryFn: getPizzas,
   });
 
@@ -63,7 +64,7 @@ const usePizzas = (pizzaID:(number)= 0) => {
   
 }
 
-const useOrders = () => {
+const useOrderExtras = ( ) => {
 
   const getSizes = async () => {
     const response = await axios.get(`${API_URL}/sizes`);
@@ -91,20 +92,40 @@ const useOrders = () => {
   }
 
   const orderExtras = useQuery({
-    queryKey: 'orderExtras' as unknown as QueryKey,
+    queryKey: ['orderExtras' as unknown as QueryKey],
     queryFn:  getOrderExtras,
   })
 
 
-  return {
-    orderExtras,
-  }
   
+
+
+  return orderExtras;
+   
+  
+}
+
+const usePostOrder = async (order:OrderedPizza) => {
+
+  const postOrder = async () => {
+    order.owner = JSON.parse(localStorage.getItem('userInfo') as string).user.id;
+    const response = await axios.post<OrderedPizza>(`${API_URL}/orders`, order);
+    console.log(response.data);
+    return response.data;
+  }
+
+  const postResponse = useQuery({
+    queryKey: ['postResponse' as unknown as QueryKey],
+    queryFn:  postOrder,
+  })
+
+  return postOrder;
 }
 
 
 
 export {
   usePizzas,
-  useOrders,
+  useOrderExtras,
+  usePostOrder,
 }
