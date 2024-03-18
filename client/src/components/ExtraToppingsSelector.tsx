@@ -19,18 +19,18 @@ const ExtraToppingsSelector = (props: PropsType) => {
   const onChangeHandler = (e: any) => {
     console.log(e.target.value);
 
-    if (orderedPizza.extra_toppings.includes(+e.target.value)) {
+    if (orderedPizza.extra_topping.includes(+e.target.value)) {
       setToppings({
         ...orderedPizza,
-        extra_toppings: orderedPizza.extra_toppings.filter(
+        extra_topping: orderedPizza.extra_topping.filter(
           (item) => item !== +e.target.value
         ),
       });
     } else {
-      console.log(orderedPizza.extra_toppings);
+      console.log(orderedPizza.extra_topping);
       setToppings({
         ...orderedPizza,
-        extra_toppings: [...orderedPizza.extra_toppings, +e.target.value],
+        extra_topping: [...orderedPizza.extra_topping, +e.target.value],
       });
     }
   };
@@ -63,7 +63,7 @@ const ExtraToppingsSelector = (props: PropsType) => {
               type="checkbox"
               value={topping.id}
               name=""
-              checked={orderedPizza.extra_toppings.includes(topping.id)}
+              checked={orderedPizza.extra_topping.includes(topping.id)}
               onChange={onChangeHandler}
             />
             <span>{topping.name}</span>
