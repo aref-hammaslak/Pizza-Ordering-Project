@@ -6,10 +6,11 @@ type ModalBackgroundType = {
 const ModalBackground = (props:ModalBackgroundType) => {
   const { setModalState , children } = props;
 
-  const [vhSize, setVhSize] = useState<number>(window.innerHeight);
+  const [vhSize, setVhSize] = useState<number>(document.body.scrollHeight);
   useEffect(() => {
     window.addEventListener("resize", () => {
       setVhSize(document.body.scrollHeight);
+      console.log(document.body.scrollHeight);
       
     })
   });

@@ -48,7 +48,7 @@ const ExtraToppingsSelector = (props: PropsType) => {
         </div>
       </label>
       <ul
-        className={`flex flex-col h-[200px] overflow-y-scroll shadow shadow-mellow absolute rounded z-20 bg-primary-mellow rounded-t-none  top-full left-0 w-auto ${
+        className={`flex flex-col h-[150px] overflow-y-scroll shadow shadow-mellow absolute rounded z-20 bg-primary-mellow    top-full left-0 w-auto ${
           isHovered ? "block" : "hidden"
         }`}
         onChange={() => {}}
