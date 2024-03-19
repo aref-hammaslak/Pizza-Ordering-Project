@@ -61,7 +61,7 @@ const Cart = () => {
               ...overallState,
                isCartOpen: false
             })}
-            className="hover:animate-spin p-5 text-white" icon={faXmark} />
+            className="hover:animate-spin p-[22px] text-white" icon={faXmark} />
           </div>
           <div className="flex flex-col px-4 ">
 

@@ -61,7 +61,7 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
               styles="hover:text-primary-light  lg:text-lg text-white  bg-primary-dark"
               isLinked={true}
               name="Sign up"
-              path="/login"
+              path="/signup"
             />
             <Button
               styles="hover:text-primary-dark   bg-primary-light"

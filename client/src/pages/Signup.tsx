@@ -139,7 +139,7 @@ const Signup = () => {
               </div>
               <div className="text-right">
                 <button
-                  className="disabled:opacity-70 text-white bg-primary-dark px-6 py-1 rounded-lg "
+                  className="disabled:opacity-70 text-white hover:bg-primary bg-primary-dark px-6 py-1 rounded-lg "
                   disabled={!formRef.current?.checkValidity() || !termChecked}
                   type="submit"
                 >

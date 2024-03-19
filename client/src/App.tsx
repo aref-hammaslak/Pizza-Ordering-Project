@@ -6,10 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
-  {
-    path: "/menu",
-    element: <pages.Menu />,
-  },
+
   {
     path: "/signup",
     element: <pages.Signup />,
@@ -29,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <pages.Contact />,
+      },
+      {
+        path: "/menu",
+        element: <pages.Menu />,
       },
     ],
   },
