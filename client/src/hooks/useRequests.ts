@@ -30,31 +30,15 @@ console.log(JSON.parse(localStorage.getItem('userInfo') as string).token)
 
 const usePizzas = (pizzaID:(number)= 0) => {
 
-
-  
   const getPizzas = async () => {
     const response = await axios.get(`${API_URL}/pizzas`);
 
     return response.data;
   }
-
-  // const getPizzaWithID = async () => {
-  //   const response = await axios.get(`${API_URL}/pizzas/${pizzaID}`);
-    
-  //   return response.data;
-  // }
-
   const Pizzas = useQuery({
     queryKey: ['pizzas' as unknown as QueryKey],
     queryFn: getPizzas,
   });
-
-  // const Pizza = useQuery({
-  //   queryKey: ['pizza', pizzaID] as unknown as QueryKey,
-  //   queryFn: getPizzaWithID,
-  // })
-
-  
 
   return{
     Pizzas,
@@ -122,10 +106,23 @@ const usePostOrder = async (order:OrderedPizza) => {
   return postOrder;
 }
 
+const useOrders = async () => {
+
+  const getOrders= async () => {
+    const response = await axios.get(`${API_URL}/orders`);
+    return response.data;
+  }
+  return useQuery({
+    queryKey: ['orders' as unknown as QueryKey],
+    queryFn: getOrders,
+  })
+}
+
 
 
 export {
   usePizzas,
   useOrderExtras,
   usePostOrder,
+  useOrders,
 }
