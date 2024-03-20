@@ -1,18 +1,49 @@
-import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useContext, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { API_URL } from '../hooks/useRequests';
+import { ovrallStatContext } from '../App';
 
 const Login = () => {
-  
 
+    
+    const {overallState, setOverallState} = useContext(ovrallStatContext);
+    const navigate = useNavigate();
     const [password, setPassword] = useState("");
     const [userName, setUserName] = useState("");
     const formRef = useRef<HTMLFormElement>(null);
   
-  
-    console.log(formRef.current?.checkValidity());
-    console.log( password, userName);
-    
-  
+    formRef.current?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      console.log({
+        username: userName,
+        password,
+      });
+      const response = await axios.post(`${API_URL}/user/login`, {
+        username: userName,
+        password: password
+      } );
+      
+      const token = response.data.token;
+      const user = response.data.user;
+      console.log(token, user);
+
+     
+      if(response.status === 200 ) {
+
+         setOverallState( state => ({
+          ...state,
+          user,
+          userToken:token,
+          isLoggedIn:true
+        }));
+        localStorage.setItem('userInfo', JSON.stringify(response.data))
+        
+        navigate('/');
+      }
+    })
+
+
     return (
       <div className="flex justify-center items-center lg:p-0 py-[20px] p-4 h-[100vh] font-roboto w-full bg-gradient-to-br">
         <div className= {`md:w-[800px]  flex flex-col md:flex-row items-center justify-center   shadow-2xl bg-contain rounded-lg md:bg-[url('./pizzaImages/4464061.jpg')]`}>
