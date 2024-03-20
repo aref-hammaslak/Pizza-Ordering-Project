@@ -1,5 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { signupImage } from "../../public/pizzaImages";
+import { ovrallStatContext } from "../App";
+import { API_URL } from "../hooks/useRequests";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [fullName, setFullName] = useState("");
@@ -7,16 +11,47 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
-  const [termChecked , setTermChecked] = useState(false);
+  const [termChecked, setTermChecked] = useState(false);
   const termRef = useRef<HTMLInputElement>(null);
+  const { overallState, setOverallState } = useContext(ovrallStatContext);
 
   console.log(formRef.current?.checkValidity());
   console.log(fullName, email, password, userName);
-  
+
+  const navigate = useNavigate();
+
+  formRef.current?.addEventListener("submit", async (e) => {
+    try {
+      e.preventDefault();
+      const response = await axios.post(`${API_URL}/user/signup`, {
+        username: userName,
+        password,
+        email,
+        first_name: fullName.split(' ')[0],
+        last_name: fullName.split(' ')[1]
+      });
+      const token = response.data.token;
+      const user = response.data.user;
+      if (response.status === 200) {
+        setOverallState({
+          ...overallState,
+          userToken: token,
+          user: user,
+          isLoggedIn:true
+        });
+        localStorage.setItem('userInfo', JSON.stringify(response.data));
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   return (
     <div className="flex justify-center items-center lg:p-0 py-[20px] p-4 h-[100vh] font-roboto w-full bg-gradient-to-br">
-      <div className= {`md:w-[800px]  flex flex-col md:flex-row items-center justify-center   shadow-2xl bg-contain rounded-lg md:bg-[url('./pizzaImages/4464061.jpg')]`}>
+      <div
+        className={`md:w-[800px]  flex flex-col md:flex-row items-center justify-center   shadow-2xl bg-contain rounded-lg md:bg-[url('./pizzaImages/4464061.jpg')]`}
+      >
         <div className="flex-1 p-12 md:block hidden bg-transparent"></div>
         <div className="  bg-white p-12 flex flex-col max-w-[400px]  gap-8">
           <div className="">
