@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Button from "../components/Button";
 import CartItem from "../components/CartItem";
-import { ovrallStatContext, OverallState } from './Route';
+import { ovrallStatContext, OverallState } from '../App';
 type CartPropsType = {
   setIsCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isCartOpen: boolean;

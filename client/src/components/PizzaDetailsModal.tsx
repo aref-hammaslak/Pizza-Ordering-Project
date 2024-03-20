@@ -9,7 +9,7 @@ import SelectionDorpDown from "./SelectionDorpDown";
 import ExtraToppingsSelector from './ExtraToppingsSelector';
 import { QueryKey, useQuery } from '@tanstack/react-query';
 import axios from "axios";
-import { ovrallStatContext, OverallState } from '../pages/Route';
+import { ovrallStatContext, OverallState } from '../App';
 
 type pizzaDetailsModalType = {
   pizzaId: number;

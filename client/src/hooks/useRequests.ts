@@ -25,8 +25,6 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-localStorage.setItem('userInfo', JSON.stringify(USER_INFO));
-console.log(JSON.parse(localStorage.getItem('userInfo') as string).token)
 
 const usePizzas = (pizzaID:(number)= 0) => {
 

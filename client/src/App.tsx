@@ -3,10 +3,12 @@ import * as pages from "./pages";
 
 // React Router
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createContext, useState } from "react";
+import axios from "axios";
+
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
-
   {
     path: "/signup",
     element: <pages.Signup />,
@@ -39,14 +41,59 @@ const router = createBrowserRouter([
   },
 ]);
 
+
+type User = {
+  id:number
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+};
+
+export type OverallState = {
+  isCartOpen: boolean;
+  user: User | undefined;
+  userToken: string | undefined;
+  isLoggedIn: boolean;
+};
+
+export type OverallStateContextType = {
+  overallState: OverallState;
+  setOverallState: React.Dispatch<React.SetStateAction<OverallState>>;
+};
+
+const ovrallStatContext = createContext<OverallStateContextType>({
+  overallState: {
+    isCartOpen: false,
+    user: undefined,
+    userToken: undefined,
+    isLoggedIn:false
+  },
+  setOverallState: () => {},
+});
+
 function App() {
+
+  const [overallState, setOverallState] = useState<OverallState>({
+    isCartOpen: false,
+    user: undefined,
+    userToken: undefined,
+    isLoggedIn: false
+  });
+
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <ovrallStatContext.Provider value={{ overallState, setOverallState }}>
+          <RouterProvider router={router} />
+        </ovrallStatContext.Provider>
       </QueryClientProvider>
     </>
   );
 }
 
 export default App;
+export{
+  ovrallStatContext
+}

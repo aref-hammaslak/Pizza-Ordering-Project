@@ -27,7 +27,16 @@ export type PizzaPreviwType = {
 };
 
 export const FilteringContext = createContext<FilteringContextType>(
-  null as never
+  {
+    filteringOptions:{
+      isAscending: true,
+      selectedCatagories: [],
+      selectedToppings:[],
+      serchedTerm: ''
+
+    },
+    setFilteringOptions: () => {}
+  }
 );
 
 const Menu = () => {

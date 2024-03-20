@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import {} from "@fortawesome/fontawesome-svg-core";
 import { Cart } from "../pages";
-import { ovrallStatContext, OverallState } from '../pages/Route';
+import { ovrallStatContext, OverallState } from '../App';
 
 type NavContent = {
   name: string;
