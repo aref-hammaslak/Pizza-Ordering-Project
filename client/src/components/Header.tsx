@@ -6,7 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import {} from "@fortawesome/fontawesome-svg-core";
 import { Cart } from "../pages";
-import { ovrallStatContext, OverallState } from '../App';
+import { ovrallStatContext, OverallState, User } from '../App';
+import UserProfile from "./UserProfile";
+import {useEffect} from 'react';
+import { useUserWithId } from "../hooks/useRequests";
 
 type NavContent = {
   name: string;
@@ -20,9 +23,28 @@ type HeaderProps = {
 
 const Header = ({ brandName, navContents }: HeaderProps) => {
   const [navIsOpen, setNavIsOpen] = useState(false);
-  const {setOverallState , overallState} = useContext(ovrallStatContext);
-  const mobileNavContent: NavContent[] = [...navContents];
+  let initial ;
+  if(localStorage.getItem('userInfo')){
+    initial = JSON.parse((localStorage).getItem("userInfo") as string )?.user
+  }
+  const [user, setUser] = useState<User>(
+    initial
+  );
 
+  useEffect( () => {
+    const updateUser = async () => {
+      const newUserInfo = await useUserWithId(user.id);
+      console.log(newUserInfo)
+      setUser({...newUserInfo});
+    }
+
+    updateUser();
+  },[])
+  
+
+  
+  const { setOverallState, overallState } = useContext(ovrallStatContext);
+  const mobileNavContent: NavContent[] = [...navContents];
   mobileNavContent.push(
     ...[
       {
@@ -56,26 +78,33 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
           <ul className="flex h-full  items-center">{navElemints}</ul>
         </nav>
         <div className="md:flex hidden items-center ">
-          <div className="flex mr-4 gap-2 md:gap-3 lg:gap-4">
-            <Button
-              styles="hover:text-primary-light  lg:text-lg text-white  bg-primary-dark"
-              isLinked={true}
-              name="Sign up"
-              path="/signup"
-            />
-            <Button
-              styles="hover:text-primary-dark   bg-primary-light"
-              isLinked={true}
-              name="Login"
-              path="/login"
-            />
-          </div>
+          {user ? (
+            <UserProfile user={user} setUser={setUser} />
+          ) : (
+            <div className="flex mr-4 gap-2 md:gap-3 lg:gap-4">
+              <Button
+                styles="hover:text-primary-light  lg:text-lg text-white  bg-primary-dark"
+                isLinked={true}
+                name="Sign up"
+                path="/signup"
+              />
+              <Button
+                styles="hover:text-primary-dark   bg-primary-light"
+                isLinked={true}
+                name="Login"
+                path="/login"
+              />
+            </div>
+          )}
+
           <div>
             <div
-              onClick={(e) => setOverallState({
-                ...overallState,
-                isCartOpen: true,
-              })}
+              onClick={(e) =>
+                setOverallState({
+                  ...overallState,
+                  isCartOpen: true,
+                })
+              }
               className=" -translate-y-[2px] md:p-2 lg:p-4 flex  items-center !pr-0"
             >
               <img className="md:w-10 lg:w-12 w-8" src={cartImg} alt="" />
@@ -130,8 +159,7 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
         )}
       </div>
 
-      
-      { <Cart />}
+      {<Cart />}
     </>
   );
 };

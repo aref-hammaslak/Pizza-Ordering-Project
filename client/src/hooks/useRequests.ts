@@ -112,4 +112,11 @@ const usePizzaWithId = async (id: number) => {
   return response.data;
 }
 
-export { usePizzas, useOrderExtras, usePostOrder, useOrders , useSizeWithId, useOrderWithId, usePizzaWithId };
+const useUserWithId = async (id: number) => {
+  const response = await  axios.get(`${API_URL}/user/${id}`);
+  return response.data
+}
+
+
+
+export { usePizzas, useOrderExtras, usePostOrder, useOrders , useSizeWithId, useOrderWithId, usePizzaWithId, useUserWithId };
