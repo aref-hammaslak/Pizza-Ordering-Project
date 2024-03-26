@@ -61,12 +61,12 @@ const ExtraToppingsSelector = (props: PropsType) => {
             <input
               className="px-2  checked: w-4 h-4"
               type="checkbox"
-              value={topping.id}
+              value={+topping.id}
               name=""
               checked={orderedPizza.extra_topping.includes(topping.id)}
               onChange={onChangeHandler}
             />
-            <span>{topping.name}</span>
+            <span className="text-nowrap">{topping.name}</span>
           </label>
         ))}
       </ul>
