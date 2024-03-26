@@ -9,7 +9,9 @@ import SelectionDorpDown from "./SelectionDorpDown";
 import ExtraToppingsSelector from './ExtraToppingsSelector';
 import { QueryKey, useQuery } from '@tanstack/react-query';
 import axios from "axios";
-import { ovrallStatContext, OverallState } from '../App';
+import { ovrallStatContext, OverallState } from "../App";
+import BlureImage from "./BlureImage";
+import { PizzaPreviwType } from "../pages/Menu";
 
 type pizzaDetailsModalType = {
   pizzaId: number;
@@ -147,11 +149,10 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
           <form action="" onSubmit={onSubmitHandler}>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col  items-center gap-2">
-                <img
-                  src={pizza.image}
-                  alt=""
-                  className="max-w-[400px] object-cover rounded "
-                />
+                  <div className="h-[300px] rounded overflow-hidden w-full relative ">
+                    <BlureImage blureHash={pizza.blur_hash} image={pizza.image} imageAlt={pizza.name}/>
+                  </div>
+
                 <div className="flex  flex-col gap-2">
                   <h1 className="text-2xl text-center font-bold">
                     {pizza.name}
