@@ -42,7 +42,7 @@ const router = createBrowserRouter([
 ]);
 
 
-type User = {
+export type User = {
   id:number
   username: string;
   first_name: string;
