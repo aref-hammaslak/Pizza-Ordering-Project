@@ -14,6 +14,7 @@ import {
 } from "../hooks/useRequests";
 import { useQuery } from "@tanstack/react-query";
 import {useRef} from 'react';
+import { useNavigate } from "react-router-dom";
 
 type CartPropsType = {
   setIsCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,17 +36,18 @@ const Cart = () => {
   const { overallState, setOverallState } = useContext(ovrallStatContext);
 
   let cartItems: CartItemType[] = [];
+  const navigate = useNavigate();
 
   const cartItemsContainerRef = useRef<HTMLDivElement>(null);
   
   const [vhSize, setVhSize] = useState<number>(document.body.scrollHeight);
   useEffect(() => {
-    window.addEventListener("resize", () => {
+    
       setVhSize(document.body.scrollHeight);
       
       
-    })
-  });
+    
+  },[overallState]);
 
   const ordersQueryFunc = async () => {
     let orders;
@@ -67,15 +69,17 @@ const Cart = () => {
           date: new Date(order.date_added),
         };
       });
-    } catch (err) {
-      console.log(err);
-      throw err;
+    } catch (error: any) {
+      console.log(error);
+      // if ( error.response.status === 403) {
+      //   localStorage.removeItem("userInfo");
+      //   navigate("/login");
+      // }
     }
 
     for (let i = 0; i < orders.length; i++) {
       orders[i] = await orders[i];
     }
-    console.log(orders);
     return orders;
   };
 
@@ -99,35 +103,40 @@ const Cart = () => {
     refetch();
   },[overallState]);
 
+
   return (
     <>
-      <div className=" ">
+      
         <div
-          style={{ height: vhSize}}
+          style={{ height: `${vhSize}px`}}
           className={`${
             overallState.isCartOpen ? "" : "hidden"
-          }  h-[${vhSize}] absolute  bottom-0 inset-x-0 top-0 z-10 `}
+          }   fixed   bottom-0 inset-x-0 top-0 z-20 `}
           onClick={(e) => {
             setOverallState({
               ...overallState,
               isCartOpen: false,
             });
-            console.log(overallState);
+            
           }}
-        ></div>
+        >
+
+
+        </div>
 
         <div
-          className={`w-[400px] transition-transform z-20 duration-500 fixed top-0 bottom-0 right-0 bg-white 
+          className={`w-[400px] transition-transform  z-40 duration-500 fixed top-0 bottom-0 right-0 bg-white 
         ${overallState.isCartOpen ? "" : "translate-x-full"}`}
         >
           <div className=" text-4xl bg-primary-dark  right-0 w-[400px] origin-left ">
             <FontAwesomeIcon
-              onClick={() =>
-                setOverallState({
+              onClick={() =>{
+                 setOverallState({
                   ...overallState,
                   isCartOpen: false,
                 })
-              }
+                document.body.classList.remove('overflow-hidden');
+              }}
               className="hover:animate-spin p-[22px] text-white"
               icon={faXmark}
             />
@@ -151,7 +160,7 @@ const Cart = () => {
             />
           </div>
         </div>
-      </div>
+      
     </>
   );
 };

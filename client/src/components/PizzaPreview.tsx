@@ -13,7 +13,7 @@ const PizzaPreview = (props: PizzaPreviewProps) => {
   const { pizza } = props;
   return (
     <div
-      onClick={() => {props.setPizzaId(pizza.id);  props.setModalState(true)} }
+      onClick={() => {props.setPizzaId(pizza.id);  props.setModalState(true); document.body.classList.add('overflow-hidden');} }
       key={pizza.id}
       className="md:max-w-[450px] cursor-pointer sm:max-w-[375px] max-w-[330px] flex flex-col  gap-4 bg-primary-mellow rounded overflow-hidden pb-4 shadow-2xl    hover:!-translate-y-1 !duration-300 transition-transform "
     >

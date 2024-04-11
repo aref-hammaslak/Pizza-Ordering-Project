@@ -57,7 +57,7 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
   const navigate = useNavigate();
 
   //get selected pizza based on the ID
-  const pizza:PizzaPreviwType = usePizzas().Pizzas.data.filter(
+  const pizza: PizzaPreviwType = usePizzas().Pizzas.data.filter(
     (pizza: { id: number }) => +pizza.id == props.pizzaId
   )[0];
 
@@ -86,28 +86,35 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
 
   const [price, setPrice] = useState(pizza.cost);
 
-
   useEffect(() => {
-
     const calculetePrice = () => {
       const typeCost = +pizza.cost;
-      const crust = orderExtras?.crusts.filter(c => c.id === orderedPizza.crust)[0];
-      const crustPrice= crust && +crust.cost || 0;
-      const size = orderExtras?.sizes.filter(s => s.id === orderedPizza.size)[0];
-      const sizeRetio = size && +size.ratio || 1;
-      const toppings = orderExtras?.toppings.filter(t => orderedPizza.extra_topping.includes(t.id) );
-      console.log(toppings);
-      const toppinsCost = toppings && +toppings.reduce((accu , topping) => {
-        return accu + +topping.cost
-      },0) || 0;
+      const crust = orderExtras?.crusts.filter(
+        (c) => c.id === orderedPizza.crust
+      )[0];
+      const crustPrice = (crust && +crust.cost) || 0;
+      const size = orderExtras?.sizes.filter(
+        (s) => s.id === orderedPizza.size
+      )[0];
+      const sizeRetio = (size && +size.ratio) || 1;
+      const toppings = orderExtras?.toppings.filter((t) =>
+        orderedPizza.extra_topping.includes(t.id)
+      );
+      const toppinsCost =
+        (toppings &&
+          +toppings.reduce((accu, topping) => {
+            return accu + +topping.cost;
+          }, 0)) ||
+        0;
 
-
-      const totalPrice = (typeCost + crustPrice + toppinsCost)* sizeRetio * orderedPizza.quantity;
+      const totalPrice =
+        (typeCost + crustPrice + toppinsCost) *
+        sizeRetio *
+        orderedPizza.quantity;
       setPrice(totalPrice);
-    }
+    };
 
     calculetePrice();
-
   }, [orderedPizza]);
 
   useEffect(() => {
@@ -128,18 +135,33 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
   }, [isSucOrdExt]);
 
   const postOrder = async (order: OrderedPizza) => {
-    order.owner = JSON.parse(
-      localStorage.getItem("userInfo") as string
-    ).user.id;
-    const response = await axios.post<OrderedPizza>(`${API_URL}/orders`, order);
-    console.log(order);
-    return response.data;
+    try {
+      order.owner = JSON.parse(
+        localStorage.getItem("userInfo") as string
+      ).user.id;
+      const response = await axios.post<OrderedPizza>(
+        `${API_URL}/orders`,
+        order
+      );
+      return response.data;
+    } catch (error:any) {
+      console.log(error);
+      if ( error.response.status === 403) {
+        localStorage.removeItem("userInfo");
+        document.body.classList.remove('overflow-hidden')
+        navigate("/login");
+       
+    }
+    }
   };
 
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
 
-    if (!localStorage.getItem("userInfo")) return navigate("/login");
+    if (!localStorage.getItem("userInfo")) {
+      document.body.classList.remove('overflow-hidden');
+      return navigate("/login");
+    } 
 
     const response = await postOrder(orderedPizza);
     if (response) {
@@ -167,7 +189,11 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col  items-center gap-2">
                   <div className="h-[300px] rounded overflow-hidden w-full relative ">
-                    <BlureImage blureHash={pizza.blur_hash} image={pizza.image} imageAlt={pizza.name}/>
+                    <BlureImage
+                      blureHash={pizza.blur_hash}
+                      image={pizza.image}
+                      imageAlt={pizza.name}
+                    />
                   </div>
 
                   <div className="flex  flex-col gap-2">
@@ -236,11 +262,8 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
                           className="active:bg-primary-dark  rounded-none"
                           key={crust.name}
                           value={crust.id}
-                        > 
-                          <span className="text-nowrap">
-                            {crust.name}
-                          </span>
-                          
+                        >
+                          <span className="text-nowrap">{crust.name}</span>
                         </option>
                       ))}
                     </select>
@@ -271,7 +294,7 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
                   />
                 </div>
 
-                <button type="submit">
+                <button onClick={() => document.body.classList.remove('overflow-hidden')} type="submit">
                   <Button
                     styles=" hover:text-black  hover:-translate-y-2 transition-all duration-200  lg:text-lg text-black focus:-translate-y-1  bg-primary-dark"
                     name="Add to Cart"

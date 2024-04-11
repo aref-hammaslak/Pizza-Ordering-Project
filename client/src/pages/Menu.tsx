@@ -24,6 +24,7 @@ export type PizzaPreviwType = {
   cost: number;
   notes: string;
   image: string;
+  blur_hash: string;
 };
 
 export const FilteringContext = createContext<FilteringContextType>(
@@ -66,7 +67,7 @@ const Menu = () => {
       </FilteringContext.Provider>
 
       {isSuccess && (
-        <div className="grid justify-center lg:grid-cols-3 md:grid-cols-2   gap-20 max-w-[1100px] p-4 m-auto mt-20 lg:px-12 md:px-8 px-0 sm:px-4 ">
+        <div className="grid justify-center lg:grid-cols-3 md:grid-cols-2   gap-16 max-w-[1100px] p-4 m-auto md:mt-12 mt-6  md:px-8 px-0 sm:px-4 ">
           {pizzas.map((pizza: PizzaPreviwType) => {
             return (
               <PizzaPreview
