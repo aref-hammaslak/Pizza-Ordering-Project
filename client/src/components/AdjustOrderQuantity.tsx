@@ -6,6 +6,7 @@ import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 import axios from "axios";
 import { API_URL, useOrderWithId } from "../hooks/useRequests";
 import { CartItemType } from "../pages/Cart";
+import MessageDialog from "./MessageDialog";
 
 type AdjustOrderQuantityType = {
   orderId?: number;
@@ -20,6 +21,7 @@ type AdjustOrderQuantityType = {
 
 const AdjustOrderQuantity = (props: AdjustOrderQuantityType) => {
   const [orderQuantity, setOrderQuantity] = useState(props.quntity || 1);
+  const [showDialoge , setShowDialog] = useState(false);
 
   useEffect(() => {
     if (props.setOrderdPizz && props.orderdPizza) {
@@ -35,7 +37,7 @@ const AdjustOrderQuantity = (props: AdjustOrderQuantityType) => {
     try {
       const response = await axios.delete(`${API_URL}/orders/${props.orderId}`);
       if (response.status === 204 && props.refetchOrders) {
-        console.log("Orders deleted successfully");
+        setShowDialog(false);
         await props.refetchOrders();
       }
     } catch (error) {}
@@ -56,6 +58,10 @@ const AdjustOrderQuantity = (props: AdjustOrderQuantityType) => {
 
   return (
     <div className="flex py-2 bg-white cursor-pointer rounded">
+      {
+        showDialoge && <MessageDialog message="Do you want to delete this item?"  setShowMessage={setShowDialog} onAccept={handleOrderDelete}/>
+      }
+
       <div
         onClick={async (e) => {
           if (orderQuantity === 1) return;
@@ -65,7 +71,10 @@ const AdjustOrderQuantity = (props: AdjustOrderQuantityType) => {
         className="px-2 border-r text-primary-dark "
       >
         {orderQuantity === 1 ? (
-          <FontAwesomeIcon onClick={handleOrderDelete} icon={faTrash} />
+          <FontAwesomeIcon onClick={() => {
+            if (props.setOrderdPizz && props.orderdPizza) return;
+            setShowDialog(true);
+          }} icon={faTrash} />
         ) : (
           <FontAwesomeIcon
             icon={faMinus}
