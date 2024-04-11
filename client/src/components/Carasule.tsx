@@ -43,8 +43,6 @@ const Carasule = ({images}:SwiperProps) => {
       navigation
       autoplay
       pagination={{ clickable: true }}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
     >
       {swiperElemets}
     </Swiper>

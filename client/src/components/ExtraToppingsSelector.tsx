@@ -17,7 +17,6 @@ const ExtraToppingsSelector = (props: PropsType) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const onChangeHandler = (e: any) => {
-    console.log(e.target.value);
 
     if (orderedPizza.extra_topping.includes(+e.target.value)) {
       setToppings({
@@ -27,7 +26,6 @@ const ExtraToppingsSelector = (props: PropsType) => {
         ),
       });
     } else {
-      console.log(orderedPizza.extra_topping);
       setToppings({
         ...orderedPizza,
         extra_topping: [...orderedPizza.extra_topping, +e.target.value],

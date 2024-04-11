@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CartItemType } from '../pages/Cart'
 import AdjustOrderQuantity from './AdjustOrderQuantity'
 import BlureImage from './BlureImage'
@@ -9,6 +9,7 @@ type CartItemProps = {
 }
 const CartItem = (props:CartItemProps) => {
   const {itemDetails , refetchOrders } = props;
+
   return (
     <div  className='flex last:border-none gap-4 border-b py-4'>
       <div className='w-24 h-24 overflow-hidden  rounded-full '>

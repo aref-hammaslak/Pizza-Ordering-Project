@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import {} from "@fortawesome/fontawesome-svg-core";
 import { Cart } from "../pages";
-import { ovrallStatContext, OverallState, User } from '../App';
+import { ovrallStatContext, OverallState, User } from "../App";
 import UserProfile from "./UserProfile";
-import {useEffect} from 'react';
+import { useEffect } from "react";
 import { useUserWithId } from "../hooks/useRequests";
 
 type NavContent = {
@@ -23,27 +23,22 @@ type HeaderProps = {
 
 const Header = ({ brandName, navContents }: HeaderProps) => {
   const [navIsOpen, setNavIsOpen] = useState(false);
-  let initial ;
-  if(localStorage.getItem('userInfo')){
-    initial = JSON.parse((localStorage).getItem("userInfo") as string )?.user
+  let initial;
+  if (localStorage.getItem("userInfo")) {
+    initial = JSON.parse(localStorage.getItem("userInfo") as string)?.user;
   }
-  const [user, setUser] = useState<User>(
-    initial
-  );
+  const [user, setUser] = useState<User>(initial);
+  const { setOverallState, overallState } = useContext(ovrallStatContext);
 
-  useEffect( () => {
+  useEffect(() => {
     const updateUser = async () => {
-      const newUserInfo = await useUserWithId(user.id);
-      console.log(newUserInfo)
-      setUser({...newUserInfo});
-    }
+      const newUserInfo = await useUserWithId(user?.id);
+      setUser({ ...newUserInfo });
+    };
 
     updateUser();
-  },[])
-  
+  }, [overallState]);
 
-  
-  const { setOverallState, overallState } = useContext(ovrallStatContext);
   const mobileNavContent: NavContent[] = [...navContents];
   mobileNavContent.push(
     ...[
@@ -78,8 +73,8 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
           <ul className="flex h-full  items-center">{navElemints}</ul>
         </nav>
         <div className="md:flex hidden items-center ">
-          {user ? (
-            <UserProfile user={user} setUser={setUser} />
+          {user || overallState.user ? (
+            <UserProfile user={user || overallState.user} setUser={setUser} />
           ) : (
             <div className="flex mr-4 gap-2 md:gap-3 lg:gap-4">
               <Button
@@ -99,12 +94,12 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
 
           <div>
             <div
-              onClick={(e) =>
+              onClick={(e) => {
                 setOverallState({
                   ...overallState,
                   isCartOpen: true,
-                })
-              }
+                });
+              }}
               className=" -translate-y-[2px] md:p-2 lg:p-4 flex  items-center !pr-0"
             >
               <img className="md:w-10 lg:w-12 w-8" src={cartImg} alt="" />
