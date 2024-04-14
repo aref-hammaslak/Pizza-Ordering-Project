@@ -1,0 +1,11 @@
+{% extends 'making_pizza/base.html' %}
+
+{% block content %}
+    <p>Create your own pizza:</p>
+
+    <form action="{% url 'making_pizza:new_order' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_div }}
+        <button name="submit">Add Pizza</button>
+    </form>
+{% endblock content %}
