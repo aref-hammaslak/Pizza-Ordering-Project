@@ -1,1 +1,1 @@
-# Learning Django
+# Pizza-Ordering-project
