@@ -1,7 +1,3 @@
-Here’s the updated README with added emojis for a more engaging touch:
-
----
-
 # Pizzaria 🍕
 
 ![Pizzaria Logo](https://img.freepik.com/premium-vector/pizzaria-cartoon-logo_142499-109.jpg)
