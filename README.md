@@ -1,6 +1,8 @@
 # Pizzaria 🍕
 
-![Pizzaria Logo](https://img.freepik.com/premium-vector/pizzaria-cartoon-logo_142499-109.jpg)
+<p align="center">
+  <img src="https://img.freepik.com/premium-vector/pizzaria-cartoon-logo_142499-109.jpg" alt="ER Diagram" width="600">
+</p>
 
 Pizzaria is a web application that allows users to customize their favorite pizzas and place orders conveniently. This repository contains the codebase for the Pizzaria project, which is built using React for the frontend and Django for the backend.
 
