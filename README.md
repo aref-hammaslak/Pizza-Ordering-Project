@@ -87,6 +87,22 @@ We welcome contributions to improve Pizzaria! To contribute, follow these steps:
 4. Push to the branch (`git push origin feature-xyz`).
 5. Create a new Pull Request.
 
+Sure, here’s a polished version for the Credits section:
+
+---
+
+## Credits
+
+This project was brought to life by the collaborative efforts of our talented team members:
+
+- **Aref Hammaslak** - Frontend Development Extraordinaire
+- **Hassan Kalantari** - Backend Mastermind
+- **Mobin Kheibary** - Operations Guru and Documentation Maestro
+
+We greatly appreciate their dedication and expertise in crafting and managing the various aspects of the Pizzaria project, ensuring its success and smooth operation.
+
+---
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
