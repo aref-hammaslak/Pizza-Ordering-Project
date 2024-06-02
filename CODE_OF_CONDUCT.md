@@ -36,7 +36,7 @@ This Code of Conduct applies both within project spaces and in public spaces whe
 
 ## Reporting Guidelines 📢
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at [insert email address]. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Please provide as much detail as possible when reporting an incident, including:
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at [this email](mobin.kh15@gmail.com). All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Please provide as much detail as possible when reporting an incident, including:
 
 - Your contact information.
 - Names (real or usernames) of any individuals involved.
@@ -54,7 +54,7 @@ Project maintainers will follow these Community Impact Guidelines in determining
 
 ## Conflict Resolution 🕊️
 
-We are committed to providing a transparent process for resolving conflicts in our community. If you feel you have been wrongly accused of violating this Code of Conduct, you may appeal the decision by contacting the project team at [mobin.kh15@gmail.com] with your reasons.
+We are committed to providing a transparent process for resolving conflicts in our community. If you feel you have been wrongly accused of violating this Code of Conduct, you may appeal the decision by contacting the project team at [this email](mobin.kh15@gmail.com) with your reasons.
 
 ## Acknowledgments 🙌
 
