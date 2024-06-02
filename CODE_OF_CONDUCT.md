@@ -1,6 +1,3 @@
-Certainly! Here’s an engaging version of the `CODE_OF_CONDUCT.md` file with relevant emojis included:
-
-```markdown
 # Code of Conduct for Pizzaria 🍕
 
 Welcome to Pizzaria! We are committed to fostering a welcoming and inclusive environment for everyone. We expect all participants in our project to adhere to the following Code of Conduct. This applies to all project spaces, including issue trackers, pull requests, and communication channels.
@@ -66,6 +63,3 @@ This Code of Conduct is adapted from the Contributor Covenant, version 1.4. We t
 ## Attribution 📜
 
 This Code of Conduct is adapted from the Contributor Covenant, version 1.4.
-```
-
-This version includes relevant emojis to make the document more engaging and visually appealing while maintaining its professionalism.
