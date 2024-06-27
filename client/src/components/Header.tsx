@@ -107,11 +107,8 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
           </div>
         </div>
 
-        <div
-          className="md:hidden text-3xl sm:text-4xl flex gap-3 items-center "
-          onClick={() => setNavIsOpen((n) => !n)}
-        >
-          <div className="">
+        <div className="md:hidden text-3xl sm:text-4xl flex gap-3 items-center ">
+          <div onClick={() => setNavIsOpen((n) => !n)} className="">
             <div className={`${navIsOpen ? "hidden" : "block"}`}>
               <FontAwesomeIcon icon={faBars} />
             </div>
@@ -123,7 +120,16 @@ const Header = ({ brandName, navContents }: HeaderProps) => {
             </div>
           </div>
 
-          <div className="-translate-y-[2px]">
+          <div
+            onClick={() => {
+              setOverallState({
+                ...overallState,
+                isCartOpen: true,
+              });
+              document.body.classList.add('overflow-hidden');
+            }}
+            className="-translate-y-[2px]"
+          >
             <a className="md:p-2 lg:p-4 flex  items-center !pr-0">
               <img className="md:w-10 lg:w-12 w-9" src={cartImg} alt="" />
             </a>

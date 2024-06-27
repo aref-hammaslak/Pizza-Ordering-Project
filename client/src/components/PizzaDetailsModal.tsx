@@ -8,15 +8,14 @@ import {
   API_URL,
   useOrderExtras,
   usePizzas,
-  usePostOrder,
 } from "../hooks/useRequests";
-import SelectionDorpDown from "./SelectionDorpDown";
 import ExtraToppingsSelector from "./ExtraToppingsSelector";
-import { QueryKey, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ovrallStatContext, OverallState } from "../App";
 import BlureImage from "./BlureImage";
 import { PizzaPreviwType } from "../pages/Menu";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type pizzaDetailsModalType = {
   pizzaId: number;
@@ -144,14 +143,13 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
         order
       );
       return response.data;
-    } catch (error:any) {
+    } catch (error: any) {
       console.log(error);
-      if ( error.response.status === 403) {
+      if (error.response.status === 403) {
         localStorage.removeItem("userInfo");
-        document.body.classList.remove('overflow-hidden')
+        document.body.classList.remove("overflow-hidden");
         navigate("/login");
-       
-    }
+      }
     }
   };
 
@@ -159,9 +157,9 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
     e.preventDefault();
 
     if (!localStorage.getItem("userInfo")) {
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove("overflow-hidden");
       return navigate("/login");
-    } 
+    }
 
     const response = await postOrder(orderedPizza);
     if (response) {
@@ -180,15 +178,22 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
       {isLodPizzas && <div>loding...</div>}
 
       {isSucPizzas && (
-        <div className=" absolute top-12 left-1/2 !-translate-x-1/2  ">
+        <div className=" absolute top-12 left-1/2 !-translate-x-1/2 overflow-auto">
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-primary-mellow  max-w-[500px]  p-8 shadow-md rounded md:max-h-[600px] origin-center transition-transform   scrollbarmax-h-[400px] fade-forward overflow-auto"
+            className="bg-primary-mellow  w-[100vw]  p-8 shadow-md rounded md:h-[90vh] origin-center transition-transform   scrollbarmax-h-[400px] fade-forward md:overflow-auto overflow-auto h-[100vh] pb-16 md:w-[500px]"
           >
+            <div onClick={() => {
+              props.setModalState(false);
+              document.body.classList.remove('overflow-hidden');
+            }} className="flex justify-end mb-3">
+              <FontAwesomeIcon className="w-8 h-8 " icon={faXmark} />
+            </div>
+
             <form action="" onSubmit={onSubmitHandler}>
               <div className="flex flex-col gap-4">
-                <div className="flex flex-col  items-center gap-2">
-                  <div className="h-[300px] rounded overflow-hidden w-full relative ">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="md:h-[300px] h-[200px]   rounded overflow-hidden w-full relative ">
                     <BlureImage
                       blureHash={pizza.blur_hash}
                       image={pizza.image}
@@ -196,11 +201,11 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
                     />
                   </div>
 
-                  <div className="flex  flex-col gap-2">
-                    <h1 className="text-2xl text-center font-bold">
+                  <div className="flex flex-col gap-2">
+                    <h1 className="text-2xl font-bold text-center">
                       {pizza.name}
                     </h1>
-                    <h1 className="text-xl text-center font-bold">
+                    <h1 className="text-xl font-bold text-center">
                       Price: ${(+price).toFixed(2)}
                     </h1>
                   </div>
@@ -212,11 +217,11 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
 
                 <div className="flex justify-between ">
                   <div className="flex items-center">
-                    <label className=" font-bold items-center mr-2">
+                    <label className="items-center mr-2 font-bold ">
                       Size:
                     </label>
                     <select
-                      className="p-2  outline-none rounded text-sm"
+                      className="p-2 text-sm rounded outline-none"
                       onChange={(e) => {
                         setOrderedPizza({
                           ...orderedPizza,
@@ -226,7 +231,7 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
                     >
                       {orderExtras?.sizes.map((size) => (
                         <option
-                          className="active:bg-primary-dark  rounded-none"
+                          className="rounded-none active:bg-primary-dark"
                           key={size.name}
                           value={size.id}
                         >
@@ -243,13 +248,13 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
                   </div>
                 </div>
 
-                <div className="flex justify-between ">
+                <div className="flex flex-col justify-between md:flex-row ">
                   <div className="flex items-center">
-                    <label className=" font-bold items-center mr-2">
+                    <label className="items-center mr-2 font-bold ">
                       Crust:
                     </label>
                     <select
-                      className="p-2  outline-none rounded text-sm"
+                      className="p-2 text-sm rounded outline-none"
                       onChange={(e) => {
                         setOrderedPizza({
                           ...orderedPizza,
@@ -259,7 +264,7 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
                     >
                       {orderExtras?.crusts.map((crust) => (
                         <option
-                          className="active:bg-primary-dark  rounded-none"
+                          className="rounded-none active:bg-primary-dark"
                           key={crust.name}
                           value={crust.id}
                         >
@@ -281,7 +286,7 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
                 <div>
                   <textarea
                     value={orderedPizza?.notes}
-                    className="resize-none p-2 rounded focus:outline-primary-dark overflow-y-auto"
+                    className="resize-none p-2 rounded focus:outline-primary-dark overflow-y-auto w-[100%]"
                     onChange={(e) =>
                       setOrderedPizza({
                         ...orderedPizza,
@@ -290,11 +295,16 @@ const PizzaDetailsModal = (props: pizzaDetailsModalType) => {
                     }
                     placeholder="Type something..."
                     rows={3} // Specify the number of visible text lines
-                    cols={50} // Specify the number of visible text columns
+                     // Specify the number of visible text columns
                   />
                 </div>
 
-                <button onClick={() => document.body.classList.remove('overflow-hidden')} type="submit">
+                <button
+                  onClick={() =>
+                    document.body.classList.remove("overflow-hidden")
+                  }
+                  type="submit"
+                >
                   <Button
                     styles=" hover:text-black  hover:-translate-y-2 transition-all duration-200  lg:text-lg text-black focus:-translate-y-1  bg-primary-dark"
                     name="Add to Cart"

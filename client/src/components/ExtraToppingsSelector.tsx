@@ -39,7 +39,7 @@ const ExtraToppingsSelector = (props: PropsType) => {
       onMouseLeave={() => setIsHovered(false)}
       className="relative p-4 flex items-center"
     >
-      <label className="font-bold flex items-center gap-4 pl-2">
+      <label onClick={() => setIsHovered(n => !n)} className="font-bold -ml-6 md:-ml-0  flex items-center gap-4 pl-2">
         {name}
         <div className="translate-y-[2px]">
           <FontAwesomeIcon icon={faAngleDown} />

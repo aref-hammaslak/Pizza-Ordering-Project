@@ -5,7 +5,7 @@ import { faAngleDown, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { User } from "../App";
 import { useState } from "react";
 import { useRef } from "react";
-import axios from "axios";
+import axios, { Axios, AxiosError } from "axios";
 import { API_URL, useUserWithId } from "../hooks/useRequests";
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +24,8 @@ const UserProfile = (porps: UserProfileProps) => {
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
   const [isEdditing, setIsEdditing] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,19 +36,26 @@ const UserProfile = (porps: UserProfileProps) => {
 
   useEffect(() => {
     const updateUser = async () => {
-      const newUserInfo = await useUserWithId(user.id);
-      setUser(newUserInfo);
-      setEmail(user.email);
-      setFullName(`${user.first_name} ${user.last_name}`);
-      setPassword("");
-      
+      try {
+        const newUserInfo = await useUserWithId(user.id);
+        setUser(newUserInfo);
+        setEmail(newUserInfo.email);
+        setFullName(`${newUserInfo.first_name} ${newUserInfo.last_name}`);
+        setPassword("");
+      } catch (error:any) {
+        const axxiosError:AxiosError = error;
+
+      }
     };
     updateUser();
-  }, [isEdditing]);
+  }, [showProfile, isEdditing]);
 
   return (
-    <div className="h-full relative group  p-1 md:p-3 lg:p-6 text-base  lg:text-lg md:text-base">
-      <div className="flex items-center shadow-inner rounded p-1 ">
+    <div className="h-full cursor-pointer relative group  p-1 md:p-3 lg:p-6 text-base  lg:text-lg md:text-base">
+      <div
+        onClick={() => setShowProfile((n) => !n)}
+        className="flex items-center shadow-inner rounded p-1 "
+      >
         <FontAwesomeIcon
           width={18}
           icon={faUser}
@@ -61,7 +70,11 @@ const UserProfile = (porps: UserProfileProps) => {
           className="text-primary-mellow"
         />
       </div>
-      <div className="absolute z-50 top-full hidden  font-roboto right-0 w-auto bg-primary-dark px-4 pb-4 pt-8 group-hover:block rounded-b ">
+      <div
+        className={`${
+          showProfile ? "" : "hidden"
+        } absolute z-30 top-full   font-roboto right-0 w-auto bg-primary-dark px-4 pb-4 pt-8 rounded-b`}
+      >
         <form className="flex flex-col  gap-4 mb-4" action="">
           <div
             className="absolute top-0  right-4"
@@ -90,7 +103,7 @@ const UserProfile = (porps: UserProfileProps) => {
               onChange={(e) => {
                 setFullName(e.target.value);
               }}
-              pattern="(.*){4,16}"
+              pattern=".{4,26}"
               ref={nameINRef}
               className={` bg-transparent  disabled:cursor-pointer text-lg focus:outline-none `}
               disabled={!isEdditing}
@@ -129,7 +142,7 @@ const UserProfile = (porps: UserProfileProps) => {
                 New password:
               </span>
               <input
-                pattern="^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$"
+                pattern="^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,}).{8,}$"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -154,12 +167,15 @@ const UserProfile = (porps: UserProfileProps) => {
                 const respons = await axios.delete(
                   `${API_URL}/user/logout/${user.id}`
                 );
-                if (respons.status === 200) {
+                if (respons.status === 200 || respons.status === 403) {
                   localStorage.removeItem("userInfo");
                   navigate("/login");
                 }
-              } catch (error) {
-                console.log(error);
+              } catch (error: any) {
+                if (error.response.status === 403) {
+                  localStorage.removeItem("userInfo");
+                  navigate("/login");
+                }
               }
             }}
             className="bg-primary-light enabledactive:-translate-y-1  enabled::hover:-translate-y-2 transition-transform  text-black  px-4 rounded-lg py-1 text-base"
@@ -183,14 +199,14 @@ const UserProfile = (porps: UserProfileProps) => {
                   password,
                 });
               }
-              console.log(data);
               try {
                 const respons = await axios.put(
                   `${API_URL}/user/${user.id}`,
                   data
                 );
+
                 if (respons.status === 200) {
-                  setIsEdditing(false);
+                  setIsEdditing((n) => !n);
                 }
               } catch (error) {
                 console.log(error);

@@ -125,10 +125,10 @@ const Cart = () => {
         </div>
 
         <div
-          className={`w-[400px] transition-transform  z-40 duration-500 fixed top-0 bottom-0 right-0 bg-white 
+          className={`md:w-[32vw] w-[100vw] transition-transform  z-40 duration-500 fixed top-0 bottom-0 right-0 bg-white 
         ${overallState.isCartOpen ? "" : "translate-x-full"}`}
         >
-          <div className=" text-4xl bg-primary-dark  right-0 w-[400px] origin-left ">
+          <div className=" text-4xl bg-primary-dark  right-0 w-[100vw] md:w-[32vw] origin-left ">
             <FontAwesomeIcon
               onClick={() =>{
                  setOverallState({
@@ -148,7 +148,7 @@ const Cart = () => {
                 return <CartItem refetchOrders={refetch} itemDetails={item} />;
               })}
           </div>
-          <div className=" bottom-0 fixed  bg-white  border-t flex items-center justify-between  w-[400px] ">
+          <div className=" pr-8 md:pr-0 bottom-0 fixed  bg-white  border-t flex items-center justify-between  w-[400px] ">
             <div className="flex flex-col p-4">
               <h3 className="font-bold text-xl">Total:</h3>
               <span className="font-semibold ">${total.toFixed(2)}</span>

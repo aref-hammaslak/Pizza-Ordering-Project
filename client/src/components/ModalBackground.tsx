@@ -6,7 +6,7 @@ type ModalBackgroundType = {
 const ModalBackground = (props:ModalBackgroundType) => {
   const { setModalState , children } = props;
 
-  const [vhSize, setVhSize] = useState<number>(document.body.scrollHeight);
+  const [vhSize, setVhSize] = useState<number>(window.innerHeight);
   useEffect(() => {
     window.addEventListener("resize", () => {
       setVhSize(document.body.scrollHeight);
@@ -20,10 +20,12 @@ const ModalBackground = (props:ModalBackgroundType) => {
     <div
       id="modal-background"
       onClick={(e) => {
+        document.body.classList.remove('overflow-hidden');
         if(!setModalState) return
         setModalState(false);
+        
       }}
-      className= {`bg-black bg-opacity-60 z-20  fixed  overflow-auto  top-0 inset-x-0 font-roboto`}
+      className= {`bg-black flex justify-center items-center bg-opacity-60 z-50  fixed    top-0 inset-x-0 font-roboto`}
       style={{ height: vhSize}}
     >
       <div onClick={(e) => e.stopPropagation()}  >
