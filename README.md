@@ -8,13 +8,17 @@ Pizzaria is a web application that allows users to customize their favorite pizz
 
 ## Table of Contents
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [Credits](#credits)
-- [License](#license)
+- [Pizzaria 🍕](#pizzaria-)
+  - [Table of Contents](#table-of-contents)
+  - [Features 🚀](#features-)
+  - [Tech Stack 💻](#tech-stack-)
+  - [Getting Started 🚀](#getting-started-)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+  - [Project Structure 📁](#project-structure-)
+  - [Contributing 🤝](#contributing-)
+  - [Credits 🌟](#credits-)
+  - [License 📜](#license-)
 
 ## Features 🚀
 
@@ -100,7 +104,6 @@ This project was brought to life by the collaborative efforts of our talented te
 - [**Hassan Kalantari**](https://github.com/HeisenbergHK) - Backend Mastermind
 - [**Mobin Kheibary**](https://github.com/Mobiwn) - Operations Guru and Documentation Maestro, Roadmap and Strategic Planning Coordinator
 - **Anis Nabipour** - Validation and Quality Assurance Expert and Lead Designer of Design Diagrams
--	**Aylar Salehmotlagh** - Ideation and Design Specialist
 -	**Mehran Mahmoudpour** - Customer Perspective Observer
 
 
