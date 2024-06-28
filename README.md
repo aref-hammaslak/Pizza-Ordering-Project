@@ -120,7 +120,7 @@ This project was brought to life by the collaborative efforts of our talented te
 
 - [**Aref Hammaslak**](https://github.com/aref-hammaslak) - Frontend Development Extraordinaire
 - [**Hassan Kalantari**](https://github.com/HeisenbergHK) - Backend Mastermind
-- [**Mobin Kheibary**](https://github.com/Mobiwn) - Operations Guru and Documentation Maestro, Roadmap and Strategic Planning Coordinator
+- [**Mobin Kheibary**](https://github.com/Mobiwn) - Operations Guru and Documentation Maestro, Roadmap and Strategic Planning Coordinator, Dockerization Lead
 - **Anis Nabipour** - Validation and Quality Assurance Expert and Lead Designer of Design Diagrams
 - **Mehran Mahmoudpour** - Customer Perspective Observer
 
