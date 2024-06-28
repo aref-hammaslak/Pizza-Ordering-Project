@@ -15,6 +15,7 @@ Pizzaria is a web application that allows users to customize their favorite pizz
   - [Getting Started 🚀](#getting-started-)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
+    - [Running with Docker](#running-with-docker)
   - [Project Structure 📁](#project-structure-)
   - [Contributing 🤝](#contributing-)
   - [Credits 🌟](#credits-)
@@ -78,6 +79,21 @@ Pizzaria is a web application that allows users to customize their favorite pizz
 
 6. Access the application at `http://localhost:3000` in your browser.
 
+### Running with Docker
+
+To run the project using Docker, follow these steps:
+
+1. Ensure Docker is installed and running on your machine.
+
+2. Build and run the Docker container:
+   ```bash
+   docker build -t pizzaria .
+   docker run -d -p 8000:8000 pizzaria
+   ```
+
+3. Access the application:
+   Open your browser and navigate to `http://localhost:8000` to see the application running.
+
 ## Project Structure 📁
 
 - **`frontend/`**: Contains the React.js frontend code.
@@ -104,8 +120,7 @@ This project was brought to life by the collaborative efforts of our talented te
 - [**Hassan Kalantari**](https://github.com/HeisenbergHK) - Backend Mastermind
 - [**Mobin Kheibary**](https://github.com/Mobiwn) - Operations Guru and Documentation Maestro, Roadmap and Strategic Planning Coordinator
 - **Anis Nabipour** - Validation and Quality Assurance Expert and Lead Designer of Design Diagrams
--	**Mehran Mahmoudpour** - Customer Perspective Observer
-
+- **Mehran Mahmoudpour** - Customer Perspective Observer
 
 We greatly appreciate their dedication and expertise in crafting and managing the various aspects of the Pizzaria project, ensuring its success and smooth operation.
 
