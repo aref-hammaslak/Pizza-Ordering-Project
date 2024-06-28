@@ -69,7 +69,7 @@ Pizzaria is a web application that allows users to customize their favorite pizz
    - Frontend:
      ```bash
      cd ../frontend
-     npm start
+     npm run dev
      ```
    - Backend:
      ```bash
@@ -77,7 +77,7 @@ Pizzaria is a web application that allows users to customize their favorite pizz
      python manage.py runserver
      ```
 
-6. Access the application at `http://localhost:3000` in your browser.
+6. Access the application at `http://localhost:5173` in your browser.
 
 ### Running with Docker 🐳
 
