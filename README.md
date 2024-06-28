@@ -15,7 +15,7 @@ Pizzaria is a web application that allows users to customize their favorite pizz
   - [Getting Started 🚀](#getting-started-)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
-    - [Running with Docker](#running-with-docker)
+    - [Running with Docker 🐳](#running-with-docker-)
   - [Project Structure 📁](#project-structure-)
   - [Contributing 🤝](#contributing-)
   - [Credits 🌟](#credits-)
@@ -79,11 +79,11 @@ Pizzaria is a web application that allows users to customize their favorite pizz
 
 6. Access the application at `http://localhost:3000` in your browser.
 
-### Running with Docker
+### Running with Docker 🐳
 
 To run the project using Docker, follow these steps:
 
-1. Ensure Docker is installed and running on your machine.
+1. Ensure Docker is installed and running on your machine. 🛠️
 
 2. Build and run the Docker container:
    ```bash
@@ -91,7 +91,9 @@ To run the project using Docker, follow these steps:
    docker run -d -p 8000:8000 pizzaria
    ```
 
-3. Access the application:
+  📦 This will build and run the application inside a Docker container.
+
+3. 🌐 Access the application:
    Open your browser and navigate to `http://localhost:8000` to see the application running.
 
 ## Project Structure 📁
